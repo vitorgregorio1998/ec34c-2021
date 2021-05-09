@@ -170,9 +170,9 @@ int main(){
 
     //selecao(num, 10);
     //insercao(num,10);
-    //mergeSort(num, 0, 9);
+    mergeSort(num, 0, 10);
     //heapSort(num, 10);
-    quickSort(num,0, 10);
+    //quickSort(num,0, 10);
 
 
     Tf = clock();
