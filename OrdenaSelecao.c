@@ -122,6 +122,38 @@ void heapSort(int *num, int n){
 }
 
 
+int part(int *num, int p, int r){
+    int i = p-1;
+    int x = num[r];
+    int j;
+    int aux;
+
+    for(j=p; j<= r-1; j++){
+      if(num[j] <= x){
+        i=i+1;
+        aux = num[i];
+        num[i] = num[j];
+        num[j] = aux;
+      }
+    }
+
+    aux = num[i+1];
+    num[i+1] = num[r];
+    num[r] = aux;
+    return i+1;
+}
+
+
+void quickSort(int *num, int p, int r){
+    int q;
+    if(p<r){
+      q= part(num, p, r);
+      quickSort(num, p, q-1);
+      quickSort(num, q+1, r);
+    } 
+}
+
+
 
 int main(){
 
@@ -139,7 +171,9 @@ int main(){
     //selecao(num, 10);
     //insercao(num,10);
     //mergeSort(num, 0, 9);
-    heapSort(num, 10);
+    //heapSort(num, 10);
+    quickSort(num,0, 10);
+
 
     Tf = clock();
 
