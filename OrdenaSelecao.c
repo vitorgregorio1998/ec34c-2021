@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <time.h>
+#include <stdlib.h>
+
 
 void selecao(int *num, int tam) { 
   int i, j, min, aux;
@@ -33,6 +35,93 @@ void insercao(int *num, int tam){
 
 }
 
+void intercala(int *num, int p, int q, int r){
+    int *num2;
+    int i=p;
+    int j=q;
+    int k=0;
+
+    num2 = malloc((r-p)*sizeof(int));
+
+    while(i<q && j<r){
+      if(num[i] <= num[j]){
+        num2[k++] = num[i++];
+      }else{
+        num2[k++] = num[j++];
+      }
+    }
+
+    while(i<q){
+      num2[k++]=num[i++];
+    }
+
+
+    while(i<r){
+      num2[k++]=num[j++];
+    }
+
+    for(i=p; i<r; i++){
+      num[i]=num2[i-p];
+    }
+    free(num2);
+
+}
+
+void mergeSort(int *num, int p, int r){
+    int q;
+    if(p<r){
+      q = (p+r)/2;
+      mergeSort(num, p, q);
+      mergeSort(num, q+1, r);
+      intercala(num, p, q, r);
+    }
+
+}
+
+
+void arruma(int *num, int a, int b){
+
+    int aux1, heapMax, aux2;
+
+    aux1 =0;
+    while((a*2 <= b) && (!aux1)){
+        if(a*2 == b){
+          heapMax = a*2;
+        }else if(num[a*2]> num[a*2 +1]){
+          heapMax = a*2;
+        }else{
+          heapMax = a*2 + 1;
+        }
+    }
+
+    if(num[a]<num[heapMax]){
+      aux2 = num[a];
+      num[a]= num[heapMax];
+      num[heapMax]= aux2;
+      a = heapMax;
+    }else{
+      aux1=1;
+    }
+
+}
+
+void heapSort(int *num, int n){
+    int i, aux;
+    
+    for(i=(n/2); i>=0;i--){
+      arruma(num, i, n-1);
+    }
+
+    for(i=n-1; i>=1; i--){
+      aux = num[0];
+      num[0]=num[i];
+      num[i]= aux;
+      arruma(num, 0, i-1);
+    }
+
+}
+
+
 
 int main(){
 
@@ -48,7 +137,9 @@ int main(){
     Ti = clock();
 
     //selecao(num, 10);
-    insercao(num,10);
+    //insercao(num,10);
+    //mergeSort(num, 0, 9);
+    heapSort(num, 10);
 
     Tf = clock();
 
@@ -56,7 +147,7 @@ int main(){
     for(i=0; i<10; i++){
         printf("%d ", num[i]);
     }
-    printf("\n\ntempo= %f\n\n", ((float)Tf - (float)Ti));
+    printf("\n\ntempooo= %f\n\n", ((float)Tf - (float)Ti));
 
     return 0;
 }
